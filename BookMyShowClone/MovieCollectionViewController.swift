@@ -7,59 +7,75 @@
 //
 
 import UIKit
-
 private let reuseIdentifier = "Cell"
 
 class MovieCollectionViewController: UICollectionViewController {
-
+    static var moviesArray = [movies]()
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
+        self.navigationItem.title = "Movies"
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
+        loadData()
+        sleep(4)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func loadData(){
+        let url = URL(string: "http://data.in.bookmyshow.com/getData.aspx?cc=&cmd=GETEVENTLIST&dt=&et=MT&f=json&lg=72.842588&lt=19.114186&rc=MUMBAI&sr=&t=a54a7b3aba576256614a")
+        var request = URLRequest(url: url!)
+        request.httpMethod = "GET"
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { (data:Data?, response:URLResponse?, error:Error?) in
+            if error != nil{
+            print("Error")
+            }
+            do{
+                let rootDictionary = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
+                let subDictionary = rootDictionary.object(forKey: "BookMyShow")as! NSDictionary
+                let rootArray = subDictionary.object(forKey: "arrEvent")as! NSArray
+                for item in rootArray{
+                    let detailDictionary = item as! NSDictionary
+                    let movieObject = movies()
+                    movieObject.movieName = detailDictionary.object(forKey: "EventTitle")as! String
+                    movieObject.genre = detailDictionary.object(forKey: "Genre")as! String
+                    movieObject.rating = detailDictionary.object(forKey: "Ratings")as! String
+                    movieObject.language = detailDictionary.object(forKey: "Language")as! String
+                    movieObject.synopsis = detailDictionary.object(forKey: "EventSynopsis")as! String
+                    movieObject.trailerURL = detailDictionary.object(forKey: "TrailerURL")as! String
+                    let posterURL = detailDictionary.object(forKey: "BannerURL")as! String
+                    let imageData = try! Data.init(contentsOf: URL(string: posterURL)!)
+                    movieObject.poster = UIImage(data: imageData)
+           MovieCollectionViewController.moviesArray.append(movieObject)
+                }
+                self.collectionView?.reloadData()
+            }
+        }
+        task.resume()
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+        return MovieCollectionViewController.moviesArray.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
-        // Configure the cell
-    
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)as! MovieCollectionViewCell
+        let tempObject = MovieCollectionViewController.moviesArray[indexPath.row]
+        cell.progress.startAnimating()
+        cell.lableName.text =  tempObject.movieName
+        cell.labelGenre.text = tempObject.genre
+        cell.imgPoster.image = tempObject.poster
+        cell.progress.stopAnimating()
         return cell
     }
-
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detail = storyboard?.instantiateViewController(withIdentifier: "detailVC")as! DetailViewController
+        let object = MovieCollectionViewController.moviesArray[indexPath.row]
+        detail.movieDetail = object
+        self.navigationController?.pushViewController(detail, animated: true)
+    }
     // MARK: UICollectionViewDelegate
 
     /*
@@ -92,3 +108,4 @@ class MovieCollectionViewController: UICollectionViewController {
     */
 
 }
+

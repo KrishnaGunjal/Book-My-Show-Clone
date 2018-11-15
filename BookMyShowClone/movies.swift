@@ -7,3 +7,14 @@
 //
 
 import Foundation
+import UIKit
+class movies  {
+    var movieName : String!
+    var genre : String!
+    var rating : String!
+    var synopsis : String!
+    var language : String!
+    var poster : UIImage!
+    var posterURL : String!
+    var trailerURL : String!
+}

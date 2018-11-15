@@ -10,9 +10,18 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var tagline: UILabel!
+    @IBOutlet weak var logo: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        self.view.backgroundColor = UIColor.white
+        logo.image = UIImage(named: "bookmyshow.jpg")
+        tagline.text = "Movies. Plays. Events. Sports"
+        push()
+    }
+    func push(){
+        var collectionVC = storyboard?.instantiateViewController(withIdentifier: "collection")as! MovieCollectionViewController
+        self.navigationController?.pushViewController(collectionVC, animated: true)
     }
 
     override func didReceiveMemoryWarning() {

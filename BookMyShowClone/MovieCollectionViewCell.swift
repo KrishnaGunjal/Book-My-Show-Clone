@@ -9,5 +9,9 @@
 import UIKit
 
 class MovieCollectionViewCell: UICollectionViewCell {
+    @IBOutlet weak var progress: UIActivityIndicatorView!
     
+    @IBOutlet weak var imgPoster: UIImageView!
+    @IBOutlet weak var lableName: UILabel!
+    @IBOutlet weak var labelGenre: UILabel!
 }
