@@ -10,9 +10,15 @@ import UIKit
 private let reuseIdentifier = "Cell"
 
 class MovieCollectionViewController: UICollectionViewController {
+    var loader : UIActivityIndicatorView!
+    
     static var moviesArray = [movies]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        loader = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        loader.center = view.center
+        loader.isHidden = true
+        self.view.addSubview(loader)
         self.navigationItem.title = "Movies"
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         loadData()
@@ -41,8 +47,13 @@ class MovieCollectionViewController: UICollectionViewController {
                     movieObject.synopsis = detailDictionary.object(forKey: "EventSynopsis")as! String
                     movieObject.trailerURL = detailDictionary.object(forKey: "TrailerURL")as! String
                     let posterURL = detailDictionary.object(forKey: "BannerURL")as! String
-                    let imageData = try! Data.init(contentsOf: URL(string: posterURL)!)
-                    movieObject.poster = UIImage(data: imageData)
+                    if (try! Data.init(contentsOf: URL(string: posterURL)!) == nil){
+                        movieObject.poster = UIImage(named: "IMG_20181003_195800")
+                    }
+                    else{
+                        let imageData = try! Data.init(contentsOf: URL(string: posterURL)!)
+                        movieObject.poster = UIImage(data: imageData)
+                    }
            MovieCollectionViewController.moviesArray.append(movieObject)
                 }
                 self.collectionView?.reloadData()
@@ -50,7 +61,23 @@ class MovieCollectionViewController: UICollectionViewController {
         }
         task.resume()
     }
-
+    func displayActivityIndicatorView(){
+        UIApplication.shared.beginIgnoringInteractionEvents()
+        self.view.bringSubview(toFront: self.loader)
+        self.loader.isHidden = false
+        self.loader.startAnimating()
+    }
+    
+    func hideActivityIndicatorView(){
+        if !self.loader.isHidden{
+            DispatchQueue.main.async {
+                UIApplication.shared.endIgnoringInteractionEvents()
+                self.loader.stopAnimating()
+                self.loader.isHidden = true
+            }
+        }
+        
+    }
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -63,11 +90,9 @@ class MovieCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)as! MovieCollectionViewCell
         let tempObject = MovieCollectionViewController.moviesArray[indexPath.row]
-        cell.progress.startAnimating()
         cell.lableName.text =  tempObject.movieName
         cell.labelGenre.text = tempObject.genre
         cell.imgPoster.image = tempObject.poster
-        cell.progress.stopAnimating()
         return cell
     }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -76,36 +101,6 @@ class MovieCollectionViewController: UICollectionViewController {
         detail.movieDetail = object
         self.navigationController?.pushViewController(detail, animated: true)
     }
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
 
 }
 

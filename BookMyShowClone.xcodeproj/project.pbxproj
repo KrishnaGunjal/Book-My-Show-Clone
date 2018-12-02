@@ -86,18 +86,58 @@
 		47E64D48217C460F00D474FE /* BookMyShowClone */ = {
 			isa = PBXGroup;
 			children = (
-				47E64D49217C460F00D474FE /* AppDelegate.swift */,
-				47E64D4B217C460F00D474FE /* ViewController.swift */,
-				47E64D4D217C460F00D474FE /* Main.storyboard */,
-				47B25694217DA4E000B7F527 /* DetailViewController.swift */,
-				47E64D5B217C5A0400D474FE /* MovieCollectionViewController.swift */,
-				47E64D5D217C5A1900D474FE /* MovieCollectionViewCell.swift */,
-				47E64D5F217C5A2C00D474FE /* movies.swift */,
-				47E64D50217C460F00D474FE /* Assets.xcassets */,
-				47E64D52217C460F00D474FE /* LaunchScreen.storyboard */,
 				47E64D55217C460F00D474FE /* Info.plist */,
+				7AB393B721B43DCE00AEE776 /* CustomCell */,
+				7AB393B621B43DB600AEE776 /* Resources */,
+				7AB393B521B43D8900AEE776 /* Base */,
+				7AB393B421B43D6200AEE776 /* ModelClass */,
+				7AB393B321B43D2C00AEE776 /* view */,
 			);
 			path = BookMyShowClone;
+			sourceTree = "<group>";
+		};
+		7AB393B321B43D2C00AEE776 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				47E64D4D217C460F00D474FE /* Main.storyboard */,
+				47E64D52217C460F00D474FE /* LaunchScreen.storyboard */,
+				47E64D4B217C460F00D474FE /* ViewController.swift */,
+				47B25694217DA4E000B7F527 /* DetailViewController.swift */,
+				47E64D5B217C5A0400D474FE /* MovieCollectionViewController.swift */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		7AB393B421B43D6200AEE776 /* ModelClass */ = {
+			isa = PBXGroup;
+			children = (
+				47E64D5F217C5A2C00D474FE /* movies.swift */,
+			);
+			path = ModelClass;
+			sourceTree = "<group>";
+		};
+		7AB393B521B43D8900AEE776 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				47E64D49217C460F00D474FE /* AppDelegate.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		7AB393B621B43DB600AEE776 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				47E64D50217C460F00D474FE /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		7AB393B721B43DCE00AEE776 /* CustomCell */ = {
+			isa = PBXGroup;
+			children = (
+				47E64D5D217C5A1900D474FE /* MovieCollectionViewCell.swift */,
+			);
+			path = CustomCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,15 +215,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-BookMyShowClone/Pods-BookMyShowClone-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
 			);
@@ -197,15 +233,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-BookMyShowClone-checkManifestLockResult.txt",
 			);

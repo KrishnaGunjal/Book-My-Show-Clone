@@ -81,17 +81,12 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="eFJ-go-aBx">
-                                            <rect key="frame" x="163" y="90" width="20" height="20"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </activityIndicatorView>
                                     </subviews>
                                 </view>
                                 <connections>
                                     <outlet property="imgPoster" destination="V00-7k-aGw" id="IAK-Xs-uB5"/>
                                     <outlet property="labelGenre" destination="6qG-wL-hEC" id="ofB-1f-IdE"/>
                                     <outlet property="lableName" destination="au8-4r-itQ" id="rUu-MB-6pw"/>
-                                    <outlet property="progress" destination="eFJ-go-aBx" id="t61-Sa-61g"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>

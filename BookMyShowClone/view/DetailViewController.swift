@@ -8,7 +8,7 @@
 
 import UIKit
 import youtube_ios_player_helper
-//#include"YTPlayerView.h"
+
 class DetailViewController: UIViewController {
     @IBOutlet weak var YTView: YTPlayerView!
     @IBOutlet weak var lblName: UILabel!
@@ -17,6 +17,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var lblGenre: UILabel!
     @IBOutlet weak var lblDescription: UILabel!
      var movieDetail : movies!
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = movieDetail.movieName
@@ -28,11 +29,13 @@ class DetailViewController: UIViewController {
         let regexString = self.extractYoutubeIdFromLink(link: movieDetail.trailerURL)
         self.YTView.load(withVideoId: regexString!)
     }
+    
     func extractYoutubeIdFromLink(link: String) -> String? {
         let pattern = "((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]++)"
         guard let regExp = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else {
             return nil
         }
+        
         let nsLink = link as NSString
         let options = NSRegularExpression.MatchingOptions(rawValue: 0)
         let range = NSRange(location: 0,length: nsLink.length)
@@ -42,20 +45,5 @@ class DetailViewController: UIViewController {
         }
         return nil
     }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
